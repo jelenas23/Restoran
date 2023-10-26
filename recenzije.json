@@ -1,0 +1,32 @@
+[
+  {
+    "ocena": 10,
+    "komentar": "Super!",
+    "narudzbina": {
+      "datumNarudzbine": "okt 10, 2023",
+      "konobar": {
+        "imePrezime": "Jelena Stojanovic",
+        "kontaktTelefon": "062123456",
+        "restoran": {
+          "nazivRestorana": "R",
+          "adresa": "Jove Ilica"
+        }
+      }
+    }
+  },
+  {
+    "ocena": 1,
+    "komentar": "Lose!!!",
+    "narudzbina": {
+      "datumNarudzbine": "okt 3, 2023",
+      "konobar": {
+        "imePrezime": "Sima Simic",
+        "kontaktTelefon": "068741562",
+        "restoran": {
+          "nazivRestorana": "R",
+          "adresa": "Jove Ilica"
+        }
+      }
+    }
+  }
+]
