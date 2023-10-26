@@ -43,7 +43,37 @@ public class Main {
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
-		
+		try {
+			HttpRequest request = HttpRequest.newBuilder()
+					.uri(URI.create("https://the-mexican-food-db.p.rapidapi.com/"))
+					.header("X-RapidAPI-Key", "08a0eddce1msh4ca7338522c4a39p1f0612jsn5151dd4d8b3c")
+					.header("X-RapidAPI-Host", "the-mexican-food-db.p.rapidapi.com")
+					.method("GET", HttpRequest.BodyPublishers.noBody())
+					.build();
+			HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
+			 String odgovor = response.body();
+			 
+			    Gson gson = new GsonBuilder().setPrettyPrinting().create();
+			    JsonArray jsonArr = gson.fromJson(odgovor,JsonArray.class);
+			    try(FileWriter file = new FileWriter("mexicanFoodAPI.json")){
+					
+					
+			    	for (int i = 0; i < jsonArr.size(); i++) {  
+				          Gson gson1 = new GsonBuilder().setPrettyPrinting().create();
+				          JsonObject obj = gson1.fromJson(jsonArr.get(i), JsonObject.class);
+				          obj.remove("image");
+				          file.write(gson1.toJson(obj, JsonObject.class) + "\n");
+			              
+			        } 
+			
+				} catch (Exception e) {
+					// TODO: handle exception
+				}
+			     
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 	}
 
