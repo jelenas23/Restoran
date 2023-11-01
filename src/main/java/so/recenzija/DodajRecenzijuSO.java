@@ -18,8 +18,8 @@ import so.OpstaSistemskaOperacija;
 public class DodajRecenzijuSO extends OpstaSistemskaOperacija {
 
 	/**
-	 * Proverava da li su podaci validni, tj. da li je objekat klase Recenzija.
-	 *
+	 * Proverava da li su podaci validni, tj. da li je objekat klase Recenzija i da li 
+	 * u bazi vec postoji recenzija za datu narudzbinu.
 	 * 
 	 * @throws Exception ukoliko objekat nije instanca klase Recenzija.
 	 */
@@ -29,6 +29,15 @@ public class DodajRecenzijuSO extends OpstaSistemskaOperacija {
 			throw new Exception("Dati objekat nije instanca klase Recenzija.");
 		}
 
+         Recenzija r = (Recenzija) odo;
+		
+		ArrayList<Recenzija> recenzije= (ArrayList<Recenzija>) (ArrayList<?>) DbBroker.getInstance().select(new Recenzija());
+
+		for (Recenzija rec : recenzije) {
+			if (r.getNarudzbina().getNarudzbinaID()== rec.getNarudzbina().getNarudzbinaID()) {
+				throw new Exception("Vec postoji recenzija za datu narudzbinu.");
+			}
+		}
 	}
 
 	/**

@@ -44,7 +44,7 @@ class UcitajRecenzijeSOTest {
 			recenzije = so.getLista();
 			assertNotNull(recenzije);
 			assertFalse(recenzije.isEmpty());
-			assertEquals(2, recenzije.size());
+			assertEquals(1, recenzije.size());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

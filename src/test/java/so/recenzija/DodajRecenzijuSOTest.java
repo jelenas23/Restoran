@@ -56,13 +56,12 @@ class DodajRecenzijuSOTest {
 		r.setRestoranID(1);
 		k.setKonobarID(1);
 		k.setRestoran(r);
-		narudzbina.setNarudzbinaID(2);
+		narudzbina.setNarudzbinaID(3);
 		SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy HH:mm");
 		Date datum = null;
 		try {
 			datum = sdf.parse("05.10.2023 22:24");
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		narudzbina.setDatumNarudzbine(datum);
@@ -80,12 +79,21 @@ class DodajRecenzijuSOTest {
 		recenzije = ucitajRecenzije();
 		
 		assertEquals(brojRecenzijaPreDodavanja + 1, recenzije.size());
+		// && rec.getOcena()==recenzija.getOcena() && rec.getKomentar().equals(recenzija.getKomentar())
+		boolean postoji=false;
+		for(Recenzija rec : recenzije) {
+			if(rec.getNarudzbina().getNarudzbinaID() == recenzija.getNarudzbina().getNarudzbinaID()) {
+				postoji = true;
+				break;
+			}
+		}
 		
-		Recenzija obrisiRec = recenzije.get(recenzije.size()-1);
-        obrisiRecenziju(obrisiRec);
-		/*for(int i = 0;i < recenzije.size();i++) {
-			obrisiRecenziju(recenzije.get(i));
-		}*/
+		assertEquals((brojRecenzijaPreDodavanja + 1), recenzije.size());
+		assertEquals(true, postoji);
+		
+		Recenzija obrisiR = recenzije.get(recenzije.size()-1);
+		obrisiRecenziju(obrisiR);
+		
 		
 	}
 
@@ -95,7 +103,6 @@ class DodajRecenzijuSOTest {
 			urso.izvrsavanje(new Recenzija());
 			return urso.getLista();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
@@ -107,15 +114,15 @@ class DodajRecenzijuSOTest {
 		try {
 			obrso.izvrsavanje(recenzija);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
 	}
 
 	
-	/*@Test
+	@Test
 	public void testNeuspesnoDodavanjePostojiNarudzbina() {
+		
 		Recenzija recenzija = new Recenzija();
 		Narudzbina narudzbina = new Narudzbina();
 		Konobar k = new Konobar();
@@ -123,11 +130,11 @@ class DodajRecenzijuSOTest {
 		r.setRestoranID(1);
 		k.setKonobarID(1);
 		k.setRestoran(r);
-		narudzbina.setNarudzbinaID(1);
-		SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy HH:mm");
+		narudzbina.setNarudzbinaID(3);
+		SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
 		Date datum = null;
 		try {
-			datum = sdf.parse("05.10.2023 22:24");
+			datum = sdf.parse("05.10.2023");
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -138,8 +145,8 @@ class DodajRecenzijuSOTest {
 		recenzija.setKomentar("Sve pohvale!");
 		recenzija.setNarudzbina(narudzbina);
 		recenzija.setOcena(10);
-
-		int prviID  = recenzija.getNarudzbina().getNarudzbinaID();
+		
+		String komentar = recenzija.getKomentar();
 
 		try {
 			so.izvrsavanje(recenzija);
@@ -147,21 +154,22 @@ class DodajRecenzijuSOTest {
 			e.printStackTrace();
 		}
 		
-		
-		recenzija.getNarudzbina().setNarudzbinaID(3);
+		recenzija.setKomentar("OK");
 
 		assertThrows(Exception.class, () -> so.izvrsavanje(recenzija));
 
-		recenzija.getNarudzbina().setNarudzbinaID(prviID);
+		recenzija.setKomentar(komentar);
 		
-        ArrayList<Recenzija> recenzije = ucitajRecenzije();
+		
+        ArrayList<Recenzija> recenzije= ucitajRecenzije();
 		
 		for(int i = 0;i < recenzije.size();i++) {
-			if(recenzije.get(i).getNarudzbina().getNarudzbinaID()==recenzija.getNarudzbina().getNarudzbinaID()) {
+			if(recenzije.get(i).getNarudzbina().getNarudzbinaID() == recenzija.getNarudzbina().getNarudzbinaID()) {
 				obrisiRecenziju(recenzije.get(i));
 			}
 		}
-	}*/
+	}
+	
 }
 
 
